@@ -295,10 +295,88 @@ classdef mso44
         
     end
     
-    function data = setAfgArbSource(obj)
-        dvffd
+    function data = setAfgArbSource(obj, source)
+        
+        %This command sets the source name for the Arbitrary Waveform.
+        %Currently supported sources are either waveform file (.wfm) or text file (.csv)
+        
+        msg = "AFG:ARBitrary:SOUrce " + source;
+        disp("The source was set to " +source);
+        data = query(obj.mso,msg);
+
+    end
+
+    function data = getAfgArbSource (obj)
+        %queries the arb source
+        msg = "AFG:ARBitrary:SOUrce?";
+        disp("The source is " +msg);
+        data = query(obj.mso,msg);
+
+    end
+
+    function data = setAfgFreq (obj, freq)
+        %Sets the AFG frequency, in Hz.
+        
+        msg = "AFG:FREQuency "+freq;
+        disp("The Arb frequency was set to " +freq);
+        data = query(obj.mso,msg);
+        
+    end
+
+    function data = getAfgFreq (obj)
+        %Queries the AFG frequency in Hz
+
+        msg = "AFG:FREQuency?";
+        disp("The Arb frequency is " +msg);
+        data = query(obj.mso,msg);
+
+    end
+
+    function data = setAfgFunction (obj, functions)
+        %Sets which AFG function to execute
+        
+        possibleFunctions = ["SINE", "SQUare", "PULS", "RAMP","NOISe", "DC", "SINC", ...
+            "GAUS", "LORENtz", "ERISe", "EDECAy", "HAVERSINe", "CARDIac", "ARBitrary"];
+
+        if ismember(functions, possibleFunctions)
+            msg = "AFG:FUNCtion "+functions;
+            disp("The function to be executed was set to " +functions);
+        else
+            disp("Try some function stored in the possibleFunctions string");
+        end
+    
+        data = query(obj.mso,msg);
+
+    end
+
+    function data = getAfgFunction (obj)
+         %Queries the executed AFG function
+       
+         msg = "AFG:FUNCtion?";
+         disp("The function is " +msg);
+         data = query(obj.mso,msg);
+    end
+
+    function data = setAfgHighLevel(obj,level)
+        %This command sets the high level value of the output waveform, in
+        %volts, when using the arbitrary function generator feature
+
+        msg = "AFG:HIGHLevel "+level;
+        disp("The high level was set to " +level);
+        data = query(obj.mso,msg);
+
     end
     
+    function data = getAfgHighLevel(obj)
+        %This command queries the high level value of the output waveform, in
+        %volts, when using the arbitrary function generator feature
+        
+        msg = "AFG:HIGHLevel?";
+        disp("The high level is " +msg);
+        data = query(obj.mso,msg);
+
+    end
+
     end
     end
   
