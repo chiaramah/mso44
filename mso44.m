@@ -251,19 +251,55 @@ classdef mso44
     end
 
     function data = setAcqStopAfter(obj, mode)
-
+        
         % This command sets whether the instrument continually acquires
         % acquisitions or acquires a single sequence. Pressing SINGLE on the front
         % panel button is equivalent to sending these commands: ACQUIRE:STOPAFTER
         % SEQUENCE and ACQUIRE:STATE 1.
-
+        
         if strcmp(mode, "seq")
-            msg = "ACQuire:STOPAfter SEQuence"
-        elseif strcmp
-
+            msg = "ACQuire:STOPAfter SEQuence";
+        elseif strcmp (mode, "run")
+            msg = "ACQuire:STOPAfter RUNSTop";
+        else
+            disp("wrong Argument for mode. Try run or seq");
+        end
+        
+        disp ("The acquisition was set to "+mode);
+        data = query(obj.mso,msg);
     end
-
+    
+    function data = getAcqStopAfter(obj)
+        
+        msg = "ACQuire:STOPAfter?";
+        disp ("The acquisition was set to "+msg);
+        data = query(obj.mso,msg);
+        
+    end
+    
+    function data = setAfgAmplitude (obj, amplitude)
+        %Sets the AFG amplitude in volts, peak to peak.
+        
+        msg = "AFG:AMPLitude" +amplitude;
+        disp( "The amplitude was set to " +amplitude);
+        data = query(obj.mso,msg);
+        
+    end
+    
+    function data = getAfgAmplitude (obj)
+        %Queries the AFG amplitude in volts, peak to peak.
+        
+        msg = "AFG:AMPLitude?";
+        disp( "The amplitude is " +msg);
+        data = query(obj.mso,msg);
+        
+    end
+    
+    function data = setAfgArbSource(obj)
+        
+    end
+    
     end
     end
   
-end
+
