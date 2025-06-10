@@ -22,8 +22,6 @@ classdef mso44
                 end
                 fopen(mso);
                 obj.mso=mso;
-                
-        
         end
    
     
@@ -376,7 +374,188 @@ classdef mso44
         data = query(obj.mso,msg);
 
     end
+    function data = setAfgLowLevel(obj,level)
 
+        % This command sets the low level value of the output waveform, in
+        % volts, when using the arbitrary function generator feature.
+
+        msg = "AFG:LOWLevel "+level;
+        disp("The low level was set to " +level);
+        data = query(obj.mso,msg);
+    end
+
+    function data = getAfgLowLevel(obj)
+
+        % This command sets the low level value of the output waveform, in
+        % volts, when using the arbitrary function generator feature.
+
+        msg = "AFG:LOWLevel?";
+        disp("The low level is " +msg);
+        data = query(obj.mso,msg);
+    end
+
+    function data = setAfgAddNoise(obj,level)
+
+        % Sets the AFG additive noise level as a percentage. Minimum is 0.0%,
+        % maximum is 100.0% and increment is 1.0%
+
+        msg = "AFG:NOISEAdd:PERCent "+level;
+        disp("The additive noise was set to " +level);
+        data = query(obj.mso,msg);
+    end
+
+    function data = getAfgAddNoise(obj)
+
+        % Queries the AFG additive noise level as a percentage. Minimum is 0.0%,
+        % maximum is 100.0% and increment is 1.0%
+
+        msg = "AFG:NOISEAdd:PERCent?";
+        disp("The additive noise is " +msg);
+        data = query(obj.mso,msg);
+    end
+
+    function data = setAfgOffset(obj, offset)
+
+        % Sets the AFG offset value, in volts
+
+        msg = "AFG:OFFSet "+offset;
+        disp("The offset was set to "+offset);
+        data = query(obj.mso,msg);
+
+    end
+
+    function data = getAfgOffset(obj)
+
+        % Sets the AFG offset value, in volts
+
+        msg = "AFG:OFFSet?";
+        disp("The offset is "+msg);
+        data = query(obj.mso,msg);
+
+    end
+
+    function data = setAfgLoadImp(obj, load)
+
+        % Sets the AFG output load impedance
+        if strcmp(load, "FIFty") || strcmp(load, "fifty")
+            msg = "AFG:OUTPut:LOAd:IMPEDance FIFty";
+        elseif strcmp (load, "high") || strcmp(load, "HIGH")
+            msg = "AFG:OUTPut:LOAd:IMPEDance HIGHZ";
+        else
+            disp ("Wrong Argument. Try fifty or high");
+        end
+
+        disp("The load impedance was set to "+load);
+        data = query(obj.mso,msg);
+
+    end
+    
+    function data = getAfgLoadImp(obj)
+
+        % Queries the AFG output load impedance
+        msg = "AFG:OUTPut:LOAd:IMPEDance?";
+        disp("The load impedance is "+msg);
+        data = query(obj.mso,msg);
+    end
+    
+    function data = setAfgOutState(obj,state)
+
+        %Sets the AFG output state.
+
+        if strcmp(state, "ON")||strcmp(state, "1")||strcmp(state, "OFF")||strcmp(state,"0")
+            msg = "AFG:OUTPut:STATE "+state;
+        else
+            disp("Wrong argument try ON, 1, OFF, 0")
+        end
+        disp("The state was set to "+state);
+        data = query(obj.mso,msg);
+    end
+
+    function data = getAfgOutState(obj)
+
+        %Queries the AFG output state
+        msg = "AFG:OUTPut:STATE?";
+        disp("The state is "+msg);
+        data = query(obj.mso,msg);
+
+    end
+    
+    function data = setAfgPeriod(obj, period)
+        % Sets the period of the AFG waveform, in seconds.
+        
+        msg = "AFG:PERIod "+period;
+        disp("The period was set to "+period);
+        data = query(obj.mso,msg);
+
+    end
+
+    function data = getAfgPeriod(obj)
+        % Queries the period of the AFG waveform, in seconds.
+        
+        msg = "AFG:PERIod?";
+        disp("The period is "+msg);
+        data = query(obj.mso,msg);
+
+    end
+
+    function data = setAfgPulse(obj, width)
+        % Sets the AFG pulse width, in seconds.
+        
+        msg = "AFG:PULse:WIDth "+width;
+        disp("The pulse width was set to "+width);
+        data = query(obj.mso,msg);
+
+    end
+
+    function data = getAfgPulse(obj)
+        % Queries the AFG pulse width, in seconds
+        
+        msg = "AFG:PULse:WIDth?";
+        disp("The pulse width is "+msg);
+        data = query(obj.mso,msg);
+
+    end
+
+    function data = setRampSym(obj, sym)
+
+        % Sets the AFG ramp symmetry in percent. Minimum is 0.0%,
+        % maximum is 100.0% and increment is 0.10%.
+        
+        msg = "AFG:RAMP:SYMmetry "+sym;
+        disp("The ramp symmetrie was set to "+sym);
+        data = query(obj.mso,msg);
+    end
+    
+     function data = getRampSym(obj)
+
+        % Queries the AFG ramp symmetry in percent. Minimum is 0.0%,
+        % maximum is 100.0% and increment is 0.10%.
+        
+        msg = "AFG:RAMP:SYMmetry?";
+        disp("The ramp symmetrie is "+msg);
+        data = query(obj.mso,msg);
+    end
+    
+    function data = setAfgSquDuty(obj,duty)
+
+        % Sets the AFG duty cycle in percent. The minimum is 10.0%,
+        % maximum is 90.0% and increment is 0.10%
+        
+        msg = "AFG:SQUare:DUty "+duty;
+        disp("The square duty was set to " +duty);
+        data = query(obj.mso,msg);
+    end
+
+    function data = getAfgSquDuty(obj)
+
+        % Queries the AFG duty cycle in percent. The minimum is 10.0%,
+        % maximum is 90.0% and increment is 0.10%
+        
+        msg = "AFG:SQUare:DUty?";
+        disp("The square duty is " +msg);
+        data = query(obj.mso,msg);
+    end
+    
     end
     end
   
